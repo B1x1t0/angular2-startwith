@@ -1,12 +1,11 @@
 import {Component} from 'angular2/core';
+import {Cat} from './cat';
+import {CatDetailComponent} from './cat-detail.component';
 
-export class Cat {
-  id: number;
-  name: string;
-}
 
 @Component({
   selector: 'my-app',
+  directives: [CatDetailComponent],
   template: `<h1>Welcome to {{title}}</h1>
               <h2>My cats</h2>
             <ul class="cats">
@@ -14,14 +13,15 @@ export class Cat {
                 <span class="badge">{{cat.id}}</span> {{cat.name}}
               </li>
             </ul>
-            <div *ngIf="selectedCat">
+            <!--<div *ngIf="selectedCat">
             <h2>{{selectedCat.name}} details!</h2>
             <div><label>id: </label>{{selectedCat.id}}</div>
             <div>
                 <label>name: </label>
                 <input [(ngModel)]="selectedCat.name" placeholder="name">
             </div>
-            </div>`,
+            </div>-->
+            <my-cat-detail [cat]="selectedCat"></my-cat-detail>`,
 
 styles: [`
   .selected {
