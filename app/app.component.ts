@@ -1,12 +1,14 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Cat} from './cat';
 import {CatDetailComponent} from './cat-detail.component';
+import {CatService} from './services/cat.service';
 
 
 @Component({
   selector: 'my-app',
+  providers: [CatService],
   directives: [CatDetailComponent],
-  template: `<h1>Welcome to {{title}}</h1>
+  template: `<h1>{{title}}</h1>
               <h2>My cats</h2>
             <ul class="cats">
               <li *ngFor="#cat of cats" (click)="onSelect(cat)" [class.selected]="cat === selectedCat">
@@ -74,10 +76,24 @@ styles: [`
 `]
 })
 
-export class AppComponent {
-  public cats = CATS;
+export class AppComponent implements OnInit {
+  cats;
   title = 'Cats App';
   selectedCat: Cat;
+
+  constructor(private _catService: CatService){
+  }
+
+  ngOnInit() {
+    this.getCats();
+  }
+
+  getCats() {
+    console.log("get cats");
+    //this.cats = this._catService.getCats();
+    this._catService.getCats().then(inputGatitos => this.cats = inputGatitos);
+
+  }
 
 
   onSelect(cat: Cat) { 
@@ -85,13 +101,3 @@ export class AppComponent {
   }
 
 }
-
-
-let CATS: Cat[] = [
-  { "id": 11, "name": "Mini11" },
-  { "id": 12, "name": "Mini12" },
-  { "id": 13, "name": "Mini13" },
-  { "id": 14, "name": "Mini14" },
-  { "id": 15, "name": "Mini15" },
-  { "id": 16, "name": "Mini16" }
-];
