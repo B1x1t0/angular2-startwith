@@ -10,4 +10,10 @@ export class CatService{
     return Promise.resolve(CATS)
   }
 
+  getCat(id){
+    return Promise.resolve(CATS).then(
+      cats => cats.filter(cat => cat.id === id)[0]
+    );
+  }
+
 }
